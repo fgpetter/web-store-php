@@ -1,0 +1,17 @@
+{
+    "name": "filipepetter/phpwebstore",
+    "description": "Webstore build with PHP following the PSR's and MySQL",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Filipe Petter",
+            "email": "fgpetter@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "core\\" : "core/"
+        }
+    }
+}
