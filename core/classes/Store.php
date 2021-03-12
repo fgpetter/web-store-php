@@ -4,7 +4,7 @@ namespace core\classes;
 
 use Exception;
 
-class Functions {
+class Store {
 
   /**
    * Construct template view
@@ -30,6 +30,17 @@ class Functions {
       include( "../core/views/$estrutura.php");
     }
 
+  }
+
+
+  /**
+   * Check if is a custommer logged in session
+   * @retunr bool
+   */
+  
+  public static function clienteLogado() {
+    
+    return ( isset( $_SESSION['cliente'] ) );
   }
 
 }

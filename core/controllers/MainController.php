@@ -2,21 +2,21 @@
 
 namespace core\controllers;
 
-use core\classes\Functions;
+use core\classes\Store;
 
 class MainController {
   
   public function index() {
 
     $dados = [
-      'titulo' => 'Esse é o título',
-      'clientes' => ['João', 'José', 'Maria', 'Carlos']
+      'titulo' => 'PHP Store',
     ];
 
-    Functions::Layout([
+    Store::Layout([
       'layouts/header',
-      'pagina_inicial',
+      'pagina-inicial',
       'layouts/footer'
     ], $dados);
   }
+  
 }
