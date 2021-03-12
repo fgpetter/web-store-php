@@ -1,5 +1,7 @@
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/fontawesome.min.js"></script>
-</body>
-</html>
+<div class="container-fluid bg-dark text-light fixed-bottom">
+  <div class="row">
+    <div class="col-12 p-3 text-center">
+      <?= $titulo.' &copy;'.date('Y') ?>      
+    </div>
+  </div>
+</div>
