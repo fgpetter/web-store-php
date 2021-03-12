@@ -1,3 +1,6 @@
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
 composer.phar
 /vendor/
 .history
@@ -9,9 +12,5 @@ public/assets/css/bootstrap.min.css.map
 public/assets/js/bootstrap.bundle.min.js
 public/assets/js/bootstrap.bundle.min.js.map
 public/assets/js/fontawesome.min.js
-
-
-# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
 public/assets/css/app.css
+public/assets/css/fontawesome.min.css
