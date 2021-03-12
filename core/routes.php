@@ -5,7 +5,8 @@
 $routes = [
   'inicio' => 'mainController@index',
   'loja' => 'mainController@loja',
-  'painel' => 'painelController@index'
+  'painel' => 'painelController@index',
+  'carrinho' => 'mainController@carrinho'
 ];
 
 $action = 'inicio';

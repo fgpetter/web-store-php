@@ -13,9 +13,41 @@ class MainController {
     ];
 
     Store::Layout([
+      'layouts/html_header',
       'layouts/header',
-      'pagina-inicial',
-      'layouts/footer'
+      'inicio',
+      'layouts/footer',
+      'layouts/html_footer'
+    ], $dados);
+  }
+
+  public function loja() {
+
+    $dados = [
+      'titulo' => 'PHP Store',
+    ];
+
+    Store::Layout([
+      'layouts/html_header',
+      'layouts/header',
+      'loja',
+      'layouts/footer',
+      'layouts/html_footer'
+    ], $dados);
+  }
+
+  public function carrinho() {
+
+    $dados = [
+      'titulo' => 'PHP Store',
+    ];
+
+    Store::Layout([
+      'layouts/html_header',
+      'layouts/header',
+      'carrinho',
+      'layouts/footer',
+      'layouts/html_footer'
     ], $dados);
   }
   
