@@ -4,6 +4,7 @@ namespace core\controllers;
 
 use core\classes\Database;
 use core\classes\Store;
+use core\models\Clientes;
 
 class MainController {
 
@@ -24,6 +25,7 @@ class MainController {
     ], $dados);
   }
 
+
   /**
    * Display store catalog page
    * @return View loja
@@ -41,6 +43,7 @@ class MainController {
     ], $dados);
   }
 
+
   /**
    * Display cart page
    * @return View carrinho
@@ -57,6 +60,7 @@ class MainController {
       'layouts/html_footer'
     ], $dados);
   }
+
   
   /**
    * Display login and sing-up page
@@ -107,27 +111,19 @@ class MainController {
       return;
 
       // TODO - retornar a tela de cadastro com os dados preenchidos
-
     }
 
     // Check if email exists in DB
-    $db = new Database();
-    $params = [
-      ':email' => strtolower( trim( $_POST['email'] ) ),
-    ];
-    $resultados = $db->select( "SELECT email FROM clientes WHERE email = :email", $params );
-
-    if( count( $resultados ) > 0 ) {
-      
+    $clientes = new Clientes();
+    if( $clientes->verificaClienteRegistrado($_POST['email']) ){
       $_SESSION['erro'] = 'Email já cadastrado';
       $this->login();
       return;
-
       // TODO - retornar a tela de cadastro com os dados preenchidos
-      
     }
+
     
-    // Create customer in DB
+    // Sanitize data to create customer
     $purl = Store::criarHash();
     $sanitizeTel = ['-', '(', ')',' '];
     
@@ -141,24 +137,14 @@ class MainController {
       ':purl' => $purl,
       ':ativo' => 0,
     ];
-
-    $db->insert("INSERT INTO clientes VALUES(0, :nome, :email, :senha, :endereco, :cidade, :telefone, :purl, :ativo, NOW(), NOW(), NULL)", $params);
+    // Create customer
+    $clientes->cadastraCliente($params);    
     
     // create link purl
-    $userUniqueLink = "http://localhost/web-store-php/public/?a=confirm-email&purl=".$purl
-
+    $userUniqueLink = "http://localhost/web-store-php/public/?a=confirm-email&purl=".$purl;
 
     
-
-    /*
-    [nome]
-    [email]
-    [password]
-    [password_repeat]
-    [endereco]
-    [cidade]
-    [telefone]
-     */
+    
   }
 
 }
