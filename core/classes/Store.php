@@ -8,10 +8,9 @@ class Store {
 
   /**
    * Construct template view
-   * @params $estruturas array
-   * @params $dados array
-   */
-  
+   * @param $estruturas array
+   * @param $dados array
+   */  
   public static function Layout( $estruturas, $dados = null ) {
 
     // check if is a valid array
@@ -35,12 +34,18 @@ class Store {
 
   /**
    * Check if is a custommer logged in session
-   * @retunr bool
-   */
-  
+   * @return bool
+   */  
   public static function clienteLogado() {
     
     return ( isset( $_SESSION['cliente'] ) );
   }
+
+  public static function criarHash() {
+
+    return bin2hex( random_bytes( 16 ) );
+
+  }
+
 
 }

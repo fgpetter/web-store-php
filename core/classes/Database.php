@@ -34,9 +34,11 @@ class Database {
 
   /**
    * SELECT Query helper
+   * 
+   * @param mixed $sql
+   * @param mixed|null $parametros
    * @return object
    */
-
   public function select($sql, $parametros = null) {
 
     // allow only select queries
@@ -74,9 +76,11 @@ class Database {
 
   /**
    * INSERT Query helper
+   * 
+   * @param mixed $sql
+   * @param mixed|null $parametros
    * @return void
    */
-
   public function insert($sql, $parametros = null) {
 
     // allow only INSERT queries
@@ -108,9 +112,11 @@ class Database {
 
   /**
    * UPDATE Query helper
+   * 
+   * @param mixed $sql
+   * @param mixed|null $parametros
    * @return void
    */
-
   public function update($sql, $parametros = null) {
 
     // allow only UPDATE queries
@@ -142,9 +148,11 @@ class Database {
   
   /**
    * DELETE Query helper
+   * 
+   * @param mixed $sql
+   * @param mixed|null $parametros
    * @return void
    */
-
   public function delete($sql, $parametros = null) {
 
     // allow only DELETE queries
@@ -177,9 +185,11 @@ class Database {
   /**
    * STATEMENT Query helper
    * Use for SQL commands eg. TRUNCATE, DROP etc.
+   * 
+   * @param mixed $sql
+   * @param mixed|null $parametros
    * @return void
-   */
-  
+   */  
   public function statement($sql, $parametros = null) {
 
     // allow only other statement queries
