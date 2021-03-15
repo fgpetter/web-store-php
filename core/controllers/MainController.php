@@ -3,13 +3,15 @@
 namespace core\controllers;
 
 use core\classes\Database;
+use core\classes\EnviarEmail;
 use core\classes\Store;
 use core\models\Clientes;
 
 class MainController {
 
   /**
-   * Display index page.
+   * Display index page
+   * 
    * @return View inicio
    */  
   public function index() {
@@ -28,6 +30,7 @@ class MainController {
 
   /**
    * Display store catalog page
+   * 
    * @return View loja
    */
   public function loja() {
@@ -46,6 +49,7 @@ class MainController {
 
   /**
    * Display cart page
+   * 
    * @return View carrinho
   */
   public function carrinho() {
@@ -64,6 +68,7 @@ class MainController {
   
   /**
    * Display login and sing-up page
+   * 
    * @return View login
    */
   public function login() {
@@ -86,8 +91,8 @@ class MainController {
 
   /**
    * Process sign-up form
-   * @param
-   * @return
+   * 
+   * @return View cadastro_sucesso | back with errors
    */
   public function criarCliente() {
     
@@ -115,7 +120,7 @@ class MainController {
 
     // Check if email exists in DB
     $clientes = new Clientes();
-    if( $clientes->verificaClienteRegistrado($_POST['email']) ){
+    if( $clientes->verificaClienteRegistrado( $_POST['email'] ) ){
       $_SESSION['erro'] = 'Email já cadastrado';
       $this->login();
       return;
@@ -141,10 +146,80 @@ class MainController {
     $clientes->cadastraCliente($params);    
     
     // create link purl
-    $userUniqueLink = "http://localhost/web-store-php/public/?a=confirm-email&purl=".$purl;
+    $userUniqueLink = BASE_URL."?a=confirm-email&purl=".$purl;
 
+    // Send confirmation e-mail
+    $emailCliente = strtolower( $_POST['email'] ) ;
+    $nomeCliente = ucwords( strtolower( $_POST['nome'] ) );
+
+    $textMessage = "<h3>Olá {$nomeCliente}!</h3>
+                    <p>Clique no link abaixo para confirmar seu e-mail<br>
+                    <a style='font-size: 1.8em;' href='{$userUniqueLink}'>CONFIRMAR E-MAIL</a></p>
+                    <p>Caso não consiga, copie e cole o link em seu navegador<br>
+                    {$userUniqueLink}";
+
+    $email = new EnviarEmail();
+    if($email->enviarEmailConfirmNovoCliente($emailCliente, $nomeCliente, $userUniqueLink, $textMessage)){
+      
+      $dados = [
+        'email' => $emailCliente,
+      ];
+
+      Store::Layout([
+        'layouts/html_header',
+        'layouts/header',
+        'cadastro_sucesso',
+        'layouts/footer',
+        'layouts/html_footer'
+      ], $dados);
+      return;
+
+    } else {
+      $_SESSION['erro'] = 'Ocorreu um erro, tente novamente em alguns instantes.';
+      $this->login();
+    }
     
+  }
+
+
+  /**
+   * E-mail validation process
+   * 
+   * @return View index | back with errors
+   */
+  public function confirmEmail() {
     
+    // Check if is logged
+    if(Store::clienteLogado()) {
+      $this->index();
+      return;
+    }
+
+    // Check if is a purl parameter
+    if( !isset( $_GET['purl'] ) ) {
+      $this->index();
+      return;
+    }
+
+    // Check if is a valid lenght purl
+    $purl = $_GET['purl'];
+    if( strlen( $purl ) != 32) {
+      $this->index();
+      return;
+    }
+
+    $clientes = new Clientes();
+    if( $clientes->validarEmail( $purl ) ){
+
+      // TODO - refatorar para caso tenha itens no carrinho, retornar ao carrinho logado, caso não retorna ao index
+      Store::redirect();
+
+    } else {
+      
+      echo 'E-mail não foi validado';
+
+    }
+
   }
 
 }

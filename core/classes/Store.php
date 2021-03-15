@@ -41,10 +41,22 @@ class Store {
     return ( isset( $_SESSION['cliente'] ) );
   }
 
+
+  /**
+   * Manage route redirection
+   * @return view
+   */ 
   public static function criarHash() {
 
     return bin2hex( random_bytes( 16 ) );
 
+  }
+
+  public static function redirect($rota = 'inicio') {
+    
+    // TODO -  processar todas as flash messages aqui também
+    header("Location: ${BASE_URL}?a={$rota}");
+    
   }
 
 

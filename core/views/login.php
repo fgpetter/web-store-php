@@ -25,6 +25,10 @@
             <div class="alert alert-danger" role="alert"><?= $_SESSION['erro']; ?></div>
           <?php unset($_SESSION['erro']); endif; ?>
 
+          <?php if(isset($_SESSION['sucesso'])): ?>
+            <div class="alert alert-success" role="alert"><?= $_SESSION['sucesso']; ?></div>
+          <?php unset($_SESSION['sucesso']); endif; ?>
+
           <form action="?a=criar-cliente" method="POST">
             <div class="mb-3">
               <input name="nome" type="text" class="form-control" id="" placeholder="Seu mome" required>

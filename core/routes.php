@@ -9,6 +9,7 @@ $routes = [
   'carrinho' => 'mainController@carrinho',
   'login' => 'mainController@login',
   'criar-cliente' => 'mainController@criarCliente',
+  'confirm-email' => 'mainController@confirmEmail',
 ];
 
 $action = 'inicio';
