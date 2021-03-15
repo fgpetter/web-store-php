@@ -10,6 +10,8 @@ $routes = [
   'login' => 'mainController@login',
   'criar-cliente' => 'mainController@criarCliente',
   'confirm-email' => 'mainController@confirmEmail',
+  'logar-cliente' => 'mainController@logarCliente',
+  'logout' => 'mainController@logout',
 ];
 
 $action = 'inicio';

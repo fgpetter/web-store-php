@@ -43,8 +43,8 @@ class Store {
 
 
   /**
-   * Manage route redirection
-   * @return view
+   * Create a unique hash for e-mail validation
+   * @return string
    */ 
   public static function criarHash() {
 
@@ -52,6 +52,11 @@ class Store {
 
   }
 
+
+  /**
+   * Process route redirection
+   * @return view
+   */ 
   public static function redirect($rota = 'inicio') {
     
     // TODO -  processar todas as flash messages aqui também

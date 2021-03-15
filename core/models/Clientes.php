@@ -43,7 +43,10 @@ class Clientes {
 
 
   /**
+   * Process email validation
    * 
+   * @param string $purl
+   * @return bool
    */
   public function validarEmail($purl) {
 
@@ -67,10 +70,40 @@ class Clientes {
 
     $db->update( "UPDATE clientes SET purl = null, ativo = 1, updated_at = NOW() WHERE id = :id", $parametros );
 
-    return true;
-
-    
+    return true;    
 
   }
+
+
+  /**
+   * Process login
+   * 
+   * @param string $email
+   * @param string $senha 
+   * @return object
+   */
+  public function validarLogin( $email, $senha ) {
+
+    $parametros = [
+      ':email' => $email
+    ];
+
+    $db = new Database();
+    $resultados = $db->select( "SELECT * FROM clientes WHERE email = :email AND ativo = 1 AND deleted_at IS NULL", $parametros );
+
+    if( count( $resultados ) != 1 ) {
+      return false;
+    }
+    $usuario = $resultados[0];
+
+    if( !password_verify( $senha, $usuario->senha ) ) {
+      return false;
+    }
+
+    return $usuario;
+
+  }
+
+
 
 }

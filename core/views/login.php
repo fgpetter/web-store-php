@@ -1,10 +1,21 @@
 <div class="container">
   <div class="row mt-5">
+
+  <!-- Flash Messages -->
+  <?php if(isset($_SESSION['erro'])): ?>
+    <div class="alert alert-danger" role="alert"><?= $_SESSION['erro']; ?></div>
+  <?php unset($_SESSION['erro']); endif; ?>
+
+  <?php if(isset($_SESSION['sucesso'])): ?>
+    <div class="alert alert-success" role="alert"><?= $_SESSION['sucesso']; ?></div>
+  <?php unset($_SESSION['sucesso']); endif; ?>
+  <!-- End flash Messages -->
+
     <div class="col-12 col-md-6">
       <div class="card my-3 mx-auto" style="max-width: 400px;">        
         <div class="card-body">
           <h5 class="card-title mb-3">Já é cliente? Faça login para acessar</h5>
-          <form>
+          <form action="?a=logar-cliente" method="POST">
             <div class="mb-3">
               <input name="email" type="email" class="form-control" id="" placeholder="Seu e-mail" required>
             </div>
@@ -20,15 +31,6 @@
       <div class="card my-3 mx-auto" style="max-width: 400px;">        
         <div class="card-body">
           <h5 class="card-title mb-3">Ainda não é cliente? Cadastre-se</h5>
-
-          <?php if(isset($_SESSION['erro'])): ?>
-            <div class="alert alert-danger" role="alert"><?= $_SESSION['erro']; ?></div>
-          <?php unset($_SESSION['erro']); endif; ?>
-
-          <?php if(isset($_SESSION['sucesso'])): ?>
-            <div class="alert alert-success" role="alert"><?= $_SESSION['sucesso']; ?></div>
-          <?php unset($_SESSION['sucesso']); endif; ?>
-
           <form action="?a=criar-cliente" method="POST">
             <div class="mb-3">
               <input name="nome" type="text" class="form-control" id="" placeholder="Seu mome" required>

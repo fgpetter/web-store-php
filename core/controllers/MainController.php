@@ -74,7 +74,7 @@ class MainController {
   public function login() {
 
     if(Store::clienteLogado()) {
-      $this->index();
+      Store::redirect();
       return;
     }
 
@@ -89,6 +89,7 @@ class MainController {
     ], $dados);
   }
 
+
   /**
    * Process sign-up form
    * 
@@ -98,33 +99,33 @@ class MainController {
     
     // Check if is logged
     if(Store::clienteLogado()) {
-      $this->index();
+      Store::redirect();
       return;
     }
 
     // Check if is POST request
     if( $_SERVER['REQUEST_METHOD'] != 'POST' ){
-      $this->index();
+      Store::redirect();;
       return;
     }
 
-    // Check if is passwords match
+    // Check if passwords match
     if( $_POST['password'] != $_POST['password_repeat'] ) {
 
+      // TODO - retornar a tela de cadastro com os dados preenchidos
       $_SESSION['erro'] = 'As senhas não são iguais';
       $this->login();
       return;
 
-      // TODO - retornar a tela de cadastro com os dados preenchidos
     }
 
     // Check if email exists in DB
     $clientes = new Clientes();
     if( $clientes->verificaClienteRegistrado( $_POST['email'] ) ){
+      // TODO - retornar a tela de cadastro com os dados preenchidos
       $_SESSION['erro'] = 'Email já cadastrado';
       $this->login();
       return;
-      // TODO - retornar a tela de cadastro com os dados preenchidos
     }
 
     
@@ -132,7 +133,7 @@ class MainController {
     $purl = Store::criarHash();
     $sanitizeTel = ['-', '(', ')',' '];
     
-    $params = [
+    $parametros = [
       ':nome' => addslashes( $_POST['nome'] ),
       ':email' => strtolower( trim( $_POST['email'] ) ),
       ':senha' => password_hash( $_POST['password'],  PASSWORD_DEFAULT ),
@@ -143,7 +144,7 @@ class MainController {
       ':ativo' => 0,
     ];
     // Create customer
-    $clientes->cadastraCliente($params);    
+    $clientes->cadastraCliente($parametros);    
     
     // create link purl
     $userUniqueLink = BASE_URL."?a=confirm-email&purl=".$purl;
@@ -191,20 +192,20 @@ class MainController {
     
     // Check if is logged
     if(Store::clienteLogado()) {
-      $this->index();
+      Store::redirect();
       return;
     }
 
     // Check if is a purl parameter
     if( !isset( $_GET['purl'] ) ) {
-      $this->index();
+      Store::redirect();;
       return;
     }
 
     // Check if is a valid lenght purl
     $purl = $_GET['purl'];
     if( strlen( $purl ) != 32) {
-      $this->index();
+      Store::redirect();;
       return;
     }
 
@@ -219,6 +220,61 @@ class MainController {
       echo 'E-mail não foi validado';
 
     }
+
+  }
+
+
+  public function logarCliente() {
+    
+    // Check if is logged
+    if(Store::clienteLogado()) {
+      Store::redirect();
+      return;
+    }
+
+    // Check if is POST request
+    if( $_SERVER['REQUEST_METHOD'] != 'POST' ){
+      Store::redirect();
+      return;
+    }
+
+    // Sanitize data to create customer
+    if(!isset( $_POST['email'] ) || !filter_var( trim( $_POST['email'] ), FILTER_VALIDATE_EMAIL ) || !isset( $_POST['password'] )){
+      $_SESSION['erro'] = 'Ocorreu um erro, e-mail ou senha inválidos.';
+      Store::redirect('login');
+      return;
+    }
+
+    $email = strtolower( trim( $_POST['email'] ) );
+    $senha = trim( $_POST['password'] );
+
+    // Check data in DB
+    $clientes = new Clientes();
+    
+    $resultados = $clientes->validarLogin( $email, $senha );
+    
+    if( $resultados ){
+      
+      $_SESSION['cliente'] = $resultados->id;
+      $_SESSION['usuario'] = $resultados->email;
+      $_SESSION['cliente_nome'] = $resultados->nome;
+      Store::redirect();
+      return;
+
+    }
+
+    $_SESSION['erro'] = 'Ocorreu um erro, e-mail ou senha inválidos.';
+    Store::redirect('login');
+    return;  
+    
+  }
+
+  public function logout() {
+    unset( $_SESSION['cliente'] );
+    unset( $_SESSION['usuario'] );
+    unset( $_SESSION['cliente_nome'] );
+    Store::redirect();
+    return;
 
   }
 
