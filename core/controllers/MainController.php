@@ -2,10 +2,10 @@
 
 namespace core\controllers;
 
-use core\classes\Database;
 use core\classes\EnviarEmail;
 use core\classes\Store;
 use core\models\Clientes;
+use core\models\Produtos;
 
 class MainController {
 
@@ -35,7 +35,24 @@ class MainController {
    */
   public function loja() {
 
-    $dados = [];
+    $produtos = new Produtos();
+
+    $categoria = false;
+    if( isset( $_GET['c'] ) && !empty( $_GET['c'] ) && $_GET['c'] != 'todos'){
+      //sanitize data
+      $rawData = $_GET['c'];
+      $categoria = preg_replace('/[^A-Za-z0-9\-]/', '', $rawData);
+    }
+
+    (count( $produtos->listaProdutosAtivos( $categoria ) ) == 0) ? $listaProdutos = 'Não existem produtos nessa busca' : $listaProdutos = $produtos->listaProdutosAtivos( $categoria );
+    $listaCategorias = $produtos->listaCategorias();
+
+    //Store::printData($listaProdutos);
+
+    $dados = [
+      'listaProdutos' => $listaProdutos,
+      'listaCategorias' => $listaCategorias,
+    ];
 
     Store::Layout([
       'layouts/html_header',
@@ -224,6 +241,11 @@ class MainController {
   }
 
 
+  /**
+   * Login process
+   * 
+   * @return View index | back with errors
+   */
   public function logarCliente() {
     
     // Check if is logged
@@ -269,6 +291,12 @@ class MainController {
     
   }
 
+
+  /**
+   * Logout process
+   * 
+   * @return void
+   */
   public function logout() {
     unset( $_SESSION['cliente'] );
     unset( $_SESSION['usuario'] );

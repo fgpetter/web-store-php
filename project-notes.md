@@ -12,12 +12,3 @@ Namespaces:
 
 BD:
   Por padrão usaremos o PDO como sistema de conexão ao banco de dados
-
-<br>
-*index.php*
-carregar o config
-carregar classes
-carregar sistema de rotas
-    - Site
-    - Carrinho
-    - Backoffice

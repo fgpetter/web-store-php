@@ -3,8 +3,8 @@
  * TODO - Refatorar para nome:nome
  */
 $routes = [
+  // site
   'inicio' => 'mainController@index',
-  'loja' => 'mainController@loja',
   'painel' => 'painelController@index',
   'carrinho' => 'mainController@carrinho',
   'login' => 'mainController@login',
@@ -12,6 +12,9 @@ $routes = [
   'confirm-email' => 'mainController@confirmEmail',
   'logar-cliente' => 'mainController@logarCliente',
   'logout' => 'mainController@logout',
+  // loja
+  'loja' => 'mainController@loja',
+  
 ];
 
 $action = 'inicio';
