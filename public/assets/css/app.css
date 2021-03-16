@@ -25,3 +25,9 @@ Verde azulado claro           #52ab98
   text-decoration: none;
 
 }
+.card{
+  transition: box-shadow 0.4s ease;
+}
+.card:hover {
+  box-shadow:0 .5rem 1rem rgba(0,0,0,.15)!important
+}

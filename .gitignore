@@ -1,11 +1,12 @@
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
-composer.phar
 /vendor/
 .history
-web-store-php.code-workspace
 .unotes/
+public/assets/images
+composer.phar
+web-store-php.code-workspace
 public/assets/webfonts
 public/assets/css/bootstrap.min.css
 public/assets/css/bootstrap.min.css.map
