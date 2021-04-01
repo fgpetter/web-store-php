@@ -12,7 +12,7 @@
         <a class="list-group-item list-group-item-action active fs-5">SELECIONE</a>
         <a class="list-group-item list-group-item-action" href="?a=loja&c=todos">Ver todos</a>
         <?php foreach( $listaCategorias as $categoria ): ?>
-        <a class="list-group-item list-group-item-action" href="?a=loja&c=<?=$categoria->categoria?>"><?=ucwords( $categoria->categoria )?></a>
+        <a class="list-group-item list-group-item-action" href="?a=loja&c=<?= $categoria->categoria ?>"><?= ucwords( $categoria->categoria ) ?></a>
         <?php endforeach; ?>
       </ul>
     

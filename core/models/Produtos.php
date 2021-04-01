@@ -28,7 +28,7 @@ class Produtos {
   public function listaCategorias() {
     $db = new Database();
 
-    $categorias = $db->select( "SELECT DISTINCT categoria FROM produtos" );
+    $categorias = $db->select( "SELECT DISTINCT categoria FROM produtos WHERE estoque > 0 AND ativo = 1" );
     return $categorias;
   }
 

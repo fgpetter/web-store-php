@@ -37,17 +37,19 @@ class MainController {
 
     $produtos = new Produtos();
 
-    $categoria = false;
+    $categoria = '';
     if( isset( $_GET['c'] ) && !empty( $_GET['c'] ) && $_GET['c'] != 'todos'){
       //sanitize data
       $rawData = $_GET['c'];
       $categoria = preg_replace('/[^A-Za-z0-9\-]/', '', $rawData);
     }
 
-    (count( $produtos->listaProdutosAtivos( $categoria ) ) == 0) ? $listaProdutos = 'Não existem produtos nessa busca' : $listaProdutos = $produtos->listaProdutosAtivos( $categoria );
-    $listaCategorias = $produtos->listaCategorias();
+    $listaProdutos = $produtos->listaProdutosAtivos( $categoria );    
+    if( count( $listaProdutos  ) == 0 ) {
+      $listaProdutos = 'Não existem produtos nessa busca';
+    }
 
-    //Store::printData($listaProdutos);
+    $listaCategorias = $produtos->listaCategorias();
 
     $dados = [
       'listaProdutos' => $listaProdutos,
