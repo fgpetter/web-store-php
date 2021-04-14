@@ -28,9 +28,15 @@
           <div class="card mb-5 border-0" style="max-width: 18rem;">
             <img src="assets/images/produtos/<?=$produto->imagem?>" class="img-fluid" alt="<?= $produto->nome ?>">
             <div class="card-body text-center">
-              <h4 class="card-title">R$ <?= $produto->valor ?></h5>
-              <h5 class="card-subtitle mb-2 text-muted"><?= $produto->nome ?></h6>
-              <a href="" class="btn btn-sm btn-outline-primary">COMPRAR</a>
+              <h5 class="card-title product-price">R$ <?= str_replace('.', ',', $produto->valor) ?></h5>
+              <h5 class="card-subtitle mb-2 text-muted"><?= $produto->nome ?></h5>
+
+              <?php if ($produto->estoque > 0): ?>
+                <button class="btn btn-sm btn-outline-primary" onclick="adicionarCarrinho(<?=$produto->id?>)">Adicionar ao carrinho</button>
+              <?php else : ?>
+                <button class="btn btn-sm btn-outline-danger">Item fora de estoque</button>
+              <?php endif; ?>
+              
             </div>
           </div>
           

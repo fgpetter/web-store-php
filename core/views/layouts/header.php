@@ -16,8 +16,11 @@
         </li>        
       </ul>
     </div>
-    <div class="">
-      <a class="me-2"  href="?a=carrinho"><i class="fas fa-shopping-cart"></i></a>
+    <div >
+      <a class="cart-icon me-3"  href="?a=carrinho">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="badge rounded-pill bg-warning text-dark cart-badge" id="cartBadgeNumber"><?php if( isset($_SESSION['totalProdutos']) ) { echo $_SESSION['totalProdutos']; } ?></span>
+      </a>
         <?php if( Store::clienteLogado() ): ?>
           <a class="me-2" href="?a=minha-conta"><i class="far fa-user-circle"></i></a>    
           <a class="me-0" href="?a=logout"><i class="fas fa-sign-out-alt"></i></a>    
