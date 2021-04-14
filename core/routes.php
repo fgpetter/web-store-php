@@ -6,12 +6,16 @@ $routes = [
   // site
   'inicio' => 'mainController@index',
   'painel' => 'painelController@index',
-  'carrinho' => 'mainController@carrinho',
   'login' => 'mainController@login',
   'criar-cliente' => 'mainController@criarCliente',
   'confirm-email' => 'mainController@confirmEmail',
   'logar-cliente' => 'mainController@logarCliente',
   'logout' => 'mainController@logout',
+
+  // Carrinho
+  'carrinho' => 'carrinhoController@carrinho',
+  'adicionar-carrinho' => 'carrinhoController@adicionarCarrinho',
+
   // loja
   'loja' => 'mainController@loja',
   

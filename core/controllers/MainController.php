@@ -64,26 +64,6 @@ class MainController {
       'layouts/html_footer'
     ], $dados);
   }
-
-
-  /**
-   * Display cart page
-   * 
-   * @return View carrinho
-  */
-  public function carrinho() {
-
-    $dados = [];
-
-    Store::Layout([
-      'layouts/html_header',
-      'layouts/header',
-      'carrinho',
-      'layouts/footer',
-      'layouts/html_footer'
-    ], $dados);
-  }
-
   
   /**
    * Display login and sing-up page
@@ -162,6 +142,7 @@ class MainController {
       ':purl' => $purl,
       ':ativo' => 0,
     ];
+    
     // Create customer
     $clientes->cadastraCliente($parametros);    
     
