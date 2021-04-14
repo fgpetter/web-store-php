@@ -10,7 +10,6 @@ class Database {
 
   private $ligacao;
 
-
   private function ligar() {
     $this->ligacao = new PDO(
       'mysql:host='.MYSQL_SERVER.';'.
@@ -24,21 +23,19 @@ class Database {
     $this->ligacao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
   }
 
-
   private function desligar() {
 
     $this->ligacao = null;
 
   }
 
-
-  /**
-   * SELECT Query helper
-   * 
-   * @param mixed $sql
-   * @param mixed|null $parametros
-   * @return object
-   */
+    /**
+     * SELECT Query helper
+     * @param mixed $sql
+     * @param mixed|null $parametros
+     * @return string
+     * @throws Exception
+     */
   public function select($sql, $parametros = null) {
 
     // allow only select queries
@@ -52,9 +49,9 @@ class Database {
 
     try {
       
-      if(!empty($parametros)) {
-        $executar = $this->ligacao->prepare($sql);
-        $executar->execute($parametros);
+      if( !empty( $parametros ) ) {
+        $executar = $this->ligacao->prepare( $sql );
+        $executar->execute( $parametros );
         $resultados = $executar->fetchAll(PDO::FETCH_CLASS);
 
       } else {
@@ -64,8 +61,7 @@ class Database {
       }
       
     } catch (PDOException $e) {
-      
-      return false;
+      return $e->getMessage();
     }
 
     $this->desligar();
@@ -103,7 +99,7 @@ class Database {
       
     } catch (PDOException $e) {
       
-      return false;
+      return;
     }
 
     $this->desligar();
@@ -139,7 +135,7 @@ class Database {
       
     } catch (PDOException $e) {
       
-      return false;
+      return;
     }
 
     $this->desligar();
@@ -175,7 +171,7 @@ class Database {
       
     } catch (PDOException $e) {
       
-      return false;
+      return;
     }
 
     $this->desligar();
@@ -193,7 +189,7 @@ class Database {
   public function statement($sql, $parametros = null) {
 
     // allow only other statement queries
-    if(preg_match("/^(DELETE|INSERT|UPDATE|DELETE)/i", $sql)){
+    if(preg_match("/^(DELETE|INSERT|UPDATE)/i", $sql)){
       throw new Exception('Erro de banco de dados - Instrução inválida');
     }
     
@@ -212,7 +208,7 @@ class Database {
       
     } catch (PDOException $e) {
       
-      return false;
+      return;
     }
 
     $this->desligar();
